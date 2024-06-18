@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { nanoid } from 'nanoid'
 import Card from './components/Card'
+import loader from "./assets/loader.svg"
+import bg from "./assets/bg_pattern.jpg"
 
 function App() {
-  const [datas, setDatas] = useState(null)  
+  const [pokeList, setPokeList] = useState(null) 
 
   useEffect(() => {
     fetch("https://tyradex.tech/api/v1/pokemon")
@@ -11,17 +13,27 @@ function App() {
       return response.json();
     })
     .then(rawDatas =>{
-      setDatas(rawDatas)
+      setPokeList(rawDatas)
     })
     .catch(err => {console.log(err.message)})
   }, [])
-
   
   return (   
-    <main className="bg-slate-50 min-h-screen py-8 px-10">
-      {datas && (
-        <ul className='grid grid-cols-5 gap-5'>
-          {datas.map(item => (
+    <main className="bg-slate-900 min-h-screen py-8 px-10 relative">
+
+      <div className={`bg-[url('/src/assets/bg_pattern.jpg')] w-full h-full absolute z-10 top-0 left-0 opacity-70`}>
+
+      </div>
+
+      {(!pokeList) && (
+        <div className="loader fixed bg-slate-50 flex items-center justify-center w-full h-full top-0 left-0 z-50">
+          <img src={loader} alt="" />
+        </div>
+      )}
+
+      {(pokeList) && (
+        <ul className='grid grid-cols-1 gap-5 relative z-20 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'>
+          {pokeList.map(item => (
             item.pokedex_id != 0 &&
             <Card key={nanoid()} datas={item} />
           ))}
