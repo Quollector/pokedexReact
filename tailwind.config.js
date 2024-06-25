@@ -6,10 +6,11 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        'main-bg' : "url('/assets/bg_pattern.jpg')"
+      zIndex: {
+        '100': '100',
+        '200': '200',
       }
-    },
+    }
   },
   plugins: [],
 }
